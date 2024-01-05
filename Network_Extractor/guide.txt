@@ -1,0 +1,11 @@
+Step 6: Load Extension
+Open Chrome and go to chrome://extensions/.
+Enable "Developer mode" in the top right.
+Click "Load unpacked" and select the folder containing your extension files.
+
+Step 7: Test the Extension
+Open a webpage that has ".m3u8" requests.
+Click on the extension icon in the toolbar to open the popup.
+Click the "Extract M3U8 URLs" button.
+Check the Chrome console for the extracted URLs.
+Note: This is a basic example, and you may need to adjust the code based on the specifics of the web pages you are working with. Additionally, ensure that your actions comply with the terms of service of the websites you are interacting with.
