@@ -1,6 +1,7 @@
 const timeElement = document.getElementById("time");
-const nameElement = document.getElementById("name");
-const timerElement = document.getElementById("timer");
+const hoursElement = document.getElementById("hours");
+const minutesElement = document.getElementById("minutes");
+const secondElement = document.getElementById("seconds");
 const startBtn = document.getElementById("start");
 const stopBtn = document.getElementById("stop");
 const resetBtn = document.getElementById("reset");
@@ -13,30 +14,17 @@ function updateTimeElement() {
     const hours = Math.floor(time / 3600);
     const minutes = Math.floor((time % 3600) / 60);
     const seconds = time % 60;
-
-    timerElement.textContent = `The timer is at ${hours} hour(s), ${minutes} minute(s), and ${seconds} second(s)`;
+    hoursElement.textContent = hours <= 9 ? `0${hours}` : hours;
+    minutesElement.textContent = minutes <= 9 ? `0${minutes}` : minutes;
+    secondElement.textContent = seconds <= 9 ? `0${seconds}` : seconds;
   });
 
   const currentTime = new Date().toLocaleTimeString();
-  timeElement.textContent = `The Time Is: ${currentTime}`;
+  timeElement.textContent = `${currentTime}`;
 }
 
 updateTimeElement();
 setInterval(updateTimeElement, 1000);
-
-// chrome.action.setBadgeText(
-//   {
-//     text: "TIME",
-//   },
-//   () => {
-//     console.log("Finshed setting badge text");
-//   }
-// );
-
-chrome.storage.sync.get(["name"], (result) => {
-  const name = result.name ?? "???";
-  nameElement.textContent = `Your name is: ${name}`;
-});
 
 startBtn.addEventListener("click", () => {
   chrome.storage.local.set({
