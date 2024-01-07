@@ -1,9 +1,41 @@
 body {
-  width: 400px;
-  height: 400px;
+  font-family: "Arial", sans-serif;
   text-align: center;
+  padding: 20px;
+  width: 400px;
+  height: 250px;
 }
 
 h1 {
-  color: blue;
+  color: #4285f4;
+}
+
+h2 {
+  color: #333;
+  margin-bottom: 10px;
+}
+
+button {
+  padding: 10px;
+  margin: 5px;
+  background-color: #4285f4;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+button:hover {
+  background-color: #3367d6;
+}
+
+#timer {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+#start,
+#stop,
+#reset {
+  width: 100px;
 }

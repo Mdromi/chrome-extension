@@ -8,11 +8,17 @@ const resetBtn = document.getElementById("reset");
 function updateTimeElement() {
   chrome.storage.local.get(["timer"], (result) => {
     const time = result.timer ?? 0;
-    timerElement.textContent = `The timer is at ${time} second`;
+
+    // Convert the total time to hours, minutes, and seconds
+    const hours = Math.floor(time / 3600);
+    const minutes = Math.floor((time % 3600) / 60);
+    const seconds = time % 60;
+
+    timerElement.textContent = `The timer is at ${hours} hour(s), ${minutes} minute(s), and ${seconds} second(s)`;
   });
 
-  const currrentTime = new Date().toLocaleTimeString();
-  timeElement.textContent = `The Time Is: ${currrentTime}`;
+  const currentTime = new Date().toLocaleTimeString();
+  timeElement.textContent = `The Time Is: ${currentTime}`;
 }
 
 updateTimeElement();

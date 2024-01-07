@@ -10,5 +10,5 @@ saveBtn.addEventListener("click", () => {
 
 chrome.storage.sync.get(["name", "notificationTime"], (result) => {
   nameInput.value = result.name ?? "???";
-  timeInput.value = result.notificationTime ?? 1000;
+  timeInput.value = result.notificationTime ?? 1;
 });
