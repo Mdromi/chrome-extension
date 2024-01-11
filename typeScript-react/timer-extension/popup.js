@@ -1,11 +1,12 @@
 const timeElement = document.getElementById("time");
 const hoursElement = document.getElementById("hours");
 const minutesElement = document.getElementById("minutes");
-const secondElement = document.getElementById("seconds");
+const secondsElement = document.getElementById("seconds");
 const startBtn = document.getElementById("start");
 const stopBtn = document.getElementById("stop");
 const resetBtn = document.getElementById("reset");
 
+// Function to update the time elements on the popup
 function updateTimeElement() {
   chrome.storage.local.get(["timer"], (result) => {
     const time = result.timer ?? 0;
@@ -14,18 +15,23 @@ function updateTimeElement() {
     const hours = Math.floor(time / 3600);
     const minutes = Math.floor((time % 3600) / 60);
     const seconds = time % 60;
-    hoursElement.textContent = hours <= 9 ? `0${hours}` : hours;
+
+    // Ensure consistent naming for the secondsElement
+    secondsElement.textContent = seconds <= 9 ? `0${seconds}` : seconds;
     minutesElement.textContent = minutes <= 9 ? `0${minutes}` : minutes;
-    secondElement.textContent = seconds <= 9 ? `0${seconds}` : seconds;
+    hoursElement.textContent = hours <= 9 ? `0${hours}` : hours;
   });
 
+  // Update the current time element
   const currentTime = new Date().toLocaleTimeString();
   timeElement.textContent = `${currentTime}`;
 }
 
+// Initial update and set up interval for continuous updates
 updateTimeElement();
 setInterval(updateTimeElement, 1000);
 
+// Event listeners for the buttons
 startBtn.addEventListener("click", () => {
   chrome.storage.local.set({
     isRunnig: true,

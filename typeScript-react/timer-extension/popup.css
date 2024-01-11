@@ -5,12 +5,19 @@ body {
   padding: 20px;
   width: 400px;
   height: 300px;
+  margin: 0;
+  padding: 0;
+}
+
+#popup-wrapper {
+  padding: 30px;
 }
 
 .clock-img img {
   max-width: 100%;
   height: auto;
 }
+
 .timer-display {
   width: 70%;
   margin: 0 auto;

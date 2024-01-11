@@ -7,24 +7,30 @@
     <title>Timer Extension</title>
   </head>
   <body>
-    <div class="container">
-      <div class="clock-img">
-        <img src="./clock.svg" alt="clock" />
-      </div>
-      <div class="time-section">
-        <h2 id="time"></h2>
-      </div>
-      <div class="timer-display">
-        <div id="hours">00</div>
-        :
-        <div id="minutes">00</div>
-        :
-        <div id="seconds">00</div>
-      </div>
-      <div class="button-section">
-        <button id="start">Start Timer</button>
-        <button id="stop">Stop Timer</button>
-        <button id="reset">Reset Timer</button>
+    <div class="popup" id="popup-wrapper">
+      <div class="container">
+        <header>
+          <div class="clock-img">
+            <img src="./clock.svg" alt="Clock icon" />
+          </div>
+          <div class="time-section">
+            <h2 id="time"></h2>
+          </div>
+        </header>
+        <main>
+          <div class="timer-display">
+            <div id="hours">00</div>
+            :
+            <div id="minutes">00</div>
+            :
+            <div id="seconds">00</div>
+          </div>
+          <div class="button-section">
+            <button id="start">Start Timer</button>
+            <button id="stop">Stop Timer</button>
+            <button id="reset">Reset Timer</button>
+          </div>
+        </main>
       </div>
     </div>
     <script src="popup.js"></script>
