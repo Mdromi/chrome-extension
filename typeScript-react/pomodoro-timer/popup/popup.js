@@ -1,145 +1,156 @@
-// Define an array to store task objects {id, text}
-const tasksArray = [];
+let tasksArray = [];
 
-// Function to add a new task
+function saveTasks() {
+  // Save tasks to storage
+  // (You can reintegrate chrome.storage.sync.set if needed)
+}
+
 function addTask() {
   const taskId = tasksArray.length;
   tasksArray.push({ id: taskId, text: "" });
-
-  // Render the new task
   renderTask(taskId);
 }
 
-// Function to delete a task
 function deleteTask(taskId) {
-  // Find the task index in the array based on its ID
-  const taskIndex = tasksArray.findIndex((task) => task.id === taskId);
+  tasksArray = tasksArray.filter((task) => task.id !== taskId);
+  renderTasks();
+}
 
-  if (taskIndex !== -1) {
-    // Remove the task object from the array
-    tasksArray.splice(taskIndex, 1);
+function createTaskInput(value, taskIndex, taskContent) {
+  const input = createInput("text", "task-input", "Enter task", value);
+  input.addEventListener("input", () => {
+    tasksArray[taskIndex].text = input.value;
+    taskContent.textContent = input.value;
+    saveTasks();
+  });
+  return input;
+}
 
-    // Render all tasks after deletion
-    renderTasks();
+function createTaskContent(value) {
+  const content = createElement("div", "task-content", value);
+  content.style.display = "none";
+  return content;
+}
+
+function handleSave(id, taskIndex, taskInput, taskContent) {
+  if (taskInput.value.trim().length === 0) {
+    alert("Task content cannot be empty. Please enter a task.");
+  } else {
+    console.log(`Task ${id} saved: ${taskInput.value}`);
+    saveTasks();
+    // updateVisibility(true, taskInput, taskContent);
+    return true;
   }
+  return false;
+}
+
+function handleReminder(id, taskInput, taskContent) {
+  console.log(`Editing task ${id}`);
+  updateVisibility(false, taskInput, taskContent);
+}
+
+function handleDelete(id, taskContainer) {
+  deleteTask(id);
+  taskContainer.remove();
+  saveTasks();
+  console.log("Deleted task", id);
+}
+
+function updateVisibility(showContent, taskInput, taskContent, ...buttons) {
+  taskInput.style.display = showContent ? "none" : "block";
+  taskContent.style.display = showContent ? "block" : "none";
+
+  buttons.forEach((button) => {
+    if (button) {
+      button.style.display = showContent ? "none" : "block";
+    }
+  });
 }
 
 function renderTask(taskId) {
-  const taskContainer = document.createElement("div");
-  taskContainer.classList.add("task-container");
-
-  const taskInput = document.createElement("input");
-  taskInput.type = "text";
-  taskInput.value = tasksArray[taskId].text;
-  taskInput.classList.add("task-input");
-  taskInput.placeholder = "Enter task";
-
-  // Create a div to hold the task content
-  const taskContent = document.createElement("div");
-  taskContent.classList.add("task-content");
-  taskContent.textContent = tasksArray[taskId].text;
-
-  // Initially hide the task content
-  taskContent.style.display = "none";
-
-  // Event listener for input changes in the task input field
-  taskInput.addEventListener("input", () => {
-    // Update the task text in the array based on its ID
-    const taskIndex = tasksArray.findIndex((task) => task.id === taskId);
-    if (taskIndex !== -1) {
-      tasksArray[taskIndex].text = taskInput.value;
-      // Update the task content div
-      taskContent.textContent = taskInput.value;
-    }
-
-    // Example: Log the tasks array when needed
-    console.log(tasksArray);
-  });
-
+  const taskContainer = createElement("div", "task-container");
+  const taskIndex = tasksArray.findIndex((task) => task.id === taskId);
+  const taskText = tasksArray[taskIndex]?.text || "";
+  const taskContent = createTaskContent(taskText);
+  const taskInput = createTaskInput(taskText, taskIndex, taskContent);
   const saveBtn = createButton("Save", "save-btn", "fas fa-save", () => {
-    if (taskInput.value.trim().length === 0) {
-      alert("Task content cannot be empty. Please enter a task.");
-    } else {
-      console.log(`Task ${taskId} saved: ${taskInput.value}`);
-      // Hide buttons, show task content
-      toggleButtonsAndContent(true);
-    }
+    const savedSuccess = handleSave(taskId, taskIndex, taskInput, taskContent);
+    handleVisibility(savedSuccess, taskInput, taskContent);
   });
-
   const reminderBtn = createButton(
     "Reminder",
     "reminder-btn",
     "fa-solid fa-bell",
-    () => {
-      console.log(`Editing task ${taskId}`);
-      // Show buttons, hide task content
-      toggleButtonsAndContent(false);
-    }
+    () => handleReminder(taskId, taskInput, taskContent)
   );
-
   const deleteBtn = createButton("Delete", "delete-btn", "fas fa-trash", () => {
-    taskContainer.remove();
-    deleteTask(taskId);
-    toggleButtonsAndContent(true);
+    handleDelete(taskId, taskContainer);
+    // handleVisibility();
   });
 
-  // Toggle visibility of buttons and task content
-  function toggleButtonsAndContent(showContent) {
-    if (showContent) {
-      taskContent.style.display = "block";
-      taskInput.style.display = "none";
-      saveBtn.style.display = "none";
-      reminderBtn.style.display = "none";
-      deleteBtn.style.display = "none";
-    } else {
-      taskContent.style.display = "none";
-      taskInput.style.display = "block";
-      saveBtn.style.display = "block";
-      reminderBtn.style.display = "block";
-      deleteBtn.style.display = "block";
-    }
+  taskContent.addEventListener("click", () => {
+    updateVisibility(
+      false,
+      taskInput,
+      taskContent,
+      saveBtn,
+      reminderBtn,
+      deleteBtn
+    );
+  });
+
+  function handleVisibility() {
+    updateVisibility(
+      true,
+      taskInput,
+      taskContent,
+      saveBtn,
+      reminderBtn,
+      deleteBtn
+    );
   }
 
-  // Event listener to toggle visibility when clicking the task content
-  taskContent.addEventListener("click", () => {
-    toggleButtonsAndContent(false);
-  });
+  updateVisibility(
+    taskText.length !== 0,
+    taskInput,
+    taskContent,
+    saveBtn,
+    reminderBtn,
+    deleteBtn
+  );
 
-  taskContainer.appendChild(taskInput);
-  taskContainer.appendChild(saveBtn);
-  taskContainer.appendChild(reminderBtn);
-  taskContainer.appendChild(deleteBtn);
-  taskContainer.appendChild(taskContent);
-
-  // Find the content area and append the new task container
-  const contentArea = document.getElementById("taskList");
-  contentArea.appendChild(taskContainer);
+  taskContainer.append(taskInput, saveBtn, reminderBtn, deleteBtn, taskContent);
+  document.getElementById("taskList").appendChild(taskContainer);
 }
 
-// Helper function to create buttons
+function createElement(tag, className, textContent) {
+  const element = document.createElement(tag);
+  element.classList.add(className);
+  element.textContent = textContent || "";
+  return element;
+}
+
+function createInput(type, className, placeholder, value) {
+  const input = createElement("input", className);
+  input.type = type;
+  input.placeholder = placeholder;
+  input.value = value || "";
+  return input;
+}
+
 function createButton(text, className, iconClass, onClickCallback) {
-  const button = document.createElement("button");
-  button.classList.add(className);
-  button.innerHTML = `<i class="${iconClass}"></i> ${text}`;
+  const button = createElement("button", className, text);
+  button.innerHTML = `<i class="${iconClass}"></i>`;
   button.addEventListener("click", onClickCallback);
   return button;
 }
 
-// Function to render all tasks
 function renderTasks() {
-  // Clear the content area before rendering tasks
-  const contentArea = document.getElementById("taskList");
-  contentArea.innerHTML = "";
-
-  // Render each task
-  tasksArray.forEach((task) => {
-    renderTask(task.id);
-  });
+  document.getElementById("taskList").innerHTML = "";
+  tasksArray.forEach((task) => renderTask(task.id));
 }
 
-// Add event listener for the "Add Task" button
 const addTaskBtn = document.getElementById("addTask");
 addTaskBtn.addEventListener("click", addTask);
 
-// Render tasks on page load
 window.addEventListener("load", renderTasks);
