@@ -1,13 +1,22 @@
 let tasksArray = [];
 
+chrome.storage.sync.get(["tasks"], (res) => {
+  tasksArray = res.tasks ? res.tasks : [];
+  renderTasks();
+});
+
 function saveTasks() {
   // Save tasks to storage
-  // (You can reintegrate chrome.storage.sync.set if needed)
+  chrome.storage.sync.set({
+    tasks: tasksArray,
+  });
 }
 
 function addTask() {
-  const taskId = tasksArray.length;
+  const taskId =
+    Date.now() + Math.floor(Math.random() * 1000) * tasksArray.length;
   tasksArray.push({ id: taskId, text: "" });
+  console.log("tasksArray", tasksArray);
   renderTask(taskId);
 }
 
@@ -35,6 +44,7 @@ function createTaskContent(value) {
 function handleSave(id, taskIndex, taskInput, taskContent) {
   if (taskInput.value.trim().length === 0) {
     alert("Task content cannot be empty. Please enter a task.");
+    updateVisibility(false, taskInput, taskContent);
   } else {
     console.log(`Task ${id} saved: ${taskInput.value}`);
     saveTasks();
@@ -99,9 +109,9 @@ function renderTask(taskId) {
     );
   });
 
-  function handleVisibility() {
+  function handleVisibility(visibility) {
     updateVisibility(
-      true,
+      visibility,
       taskInput,
       taskContent,
       saveBtn,
