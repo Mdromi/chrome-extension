@@ -11,21 +11,41 @@
       referrerpolicy="no-referrer"
     />
     <link rel="stylesheet" href="./popup.css" />
+    <link rel="stylesheet" href="./css/task.css" />
+    <link rel="stylesheet" href="./css/timer.css" />
     <title>Pomodoro Timer</title>
   </head>
   <body>
     <div class="popup-container">
       <div class="header">
-        <img src="../icon.png" alt="Pomodoro Timer" class="logo" />
-        <h1 class="title">Pomodoro Timer</h1>
+        <div class="header-left">
+          <img src="../icon.png" alt="Pomodoro Timer" class="logo" />
+          <h1 class="title">Pomodoro Timer</h1>
+        </div>
+        <div class="header-right">
+          <h2 id="time">08:03</h2>
+        </div>
       </div>
       <div class="content">
-        <h2 class="timer">00:00</h2>
-        <button id="startTimer" class="btn">Start Timer</button>
-        <button id="addTask" class="btn">Add Task</button>
+        <div class="timer-section">
+          <div class="timer-display">
+            <div id="hours">00</div>
+            :
+            <div id="minutes">00</div>
+            :
+            <div id="seconds">00</div>
+          </div>
+          <div class="button-section">
+            <button id="start" class="timerBtn">Start Timer</button>
+            <button id="reset" class="timerBtn">Reset Timer</button>
+          </div>
+        </div>
+        <button id="addTask" class="add-task-btn">Add Task</button>
         <div class="task-list" id="taskList"></div>
       </div>
     </div>
     <script src="./popup.js"></script>
+    <script src="./js/handleTimer.js"></script>
+    <script src="./js/handleTask.js"></script>
   </body>
 </html>

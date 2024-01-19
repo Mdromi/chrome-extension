@@ -1,0 +1,78 @@
+/* TASK */
+.content {
+  padding: 20px;
+}
+
+.add-task-btn {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  background-color: #d53937;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  margin: 5px 0;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.add-task-btn:hover {
+  background-color: #b3272f;
+}
+
+.task-container {
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.task-input {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-right: 5px;
+}
+
+.delete-btn {
+  padding: 8px 12px;
+  background-color: #e74c3c;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.save-btn {
+  padding: 8px 12px;
+  background-color: #3498db;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.reminder-btn {
+  margin: 0 2px;
+  padding: 8px 12px;
+  background-color: #2ecc71; /* Choose your preferred color */
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.task-content {
+  display: none; /* Initially hide the task content */
+  padding: 10px;
+  margin-top: 10px;
+  background-color: #f2f2f2;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.task-container:hover .task-content {
+  display: block; /* Show the task content on hover */
+}
