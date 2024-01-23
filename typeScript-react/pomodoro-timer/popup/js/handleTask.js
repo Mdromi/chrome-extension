@@ -1,4 +1,6 @@
 let tasksArray = [];
+let reminderPopup;
+let overlay;
 
 chrome.storage.sync.get(["tasks"], (res) => {
   tasksArray = res.tasks ? res.tasks : [];
@@ -15,7 +17,7 @@ function saveTasks() {
 function addTask() {
   const taskId =
     Date.now() + Math.floor(Math.random() * 1000) * tasksArray.length;
-  tasksArray.push({ id: taskId, text: "" });
+  tasksArray.push({ id: taskId, text: "", reminder: false, reminderTime: 5 });
   console.log("tasksArray", tasksArray);
   renderTask(taskId);
 }
@@ -52,10 +54,48 @@ function handleSave(id, taskIndex, taskInput, taskContent) {
   }
   return false;
 }
-
 function handleReminder(id, taskInput, taskContent) {
+  // Toggle the visibility of the overlay and reminder popup
+  const overlay = document.getElementById("overlay");
+  const taskElement = document.getElementById("taskContent");
+  const timeInput = document.getElementById("time-input");
+  const saveBtnElement = document.getElementById("reminder-saveBtn");
   console.log(`Editing task ${id}`);
-  updateVisibility(false, taskInput, taskContent);
+  // Find the task index in the array based on its ID
+  const taskIndex = tasksArray.findIndex((task) => task.id === id);
+  console.log("taskIndex", taskIndex);
+  let reminderTime = 0;
+  if (taskIndex !== -1) {
+    reminderTime = tasksArray[taskIndex].reminderTime;
+  }
+
+  overlay.style.display = "block";
+  console.log("taskContent", taskContent);
+  taskElement.textContent = taskContent.textContent;
+  timeInput.value = reminderTime;
+
+  timeInput.addEventListener("change", (event) => {
+    const value = event.target.value;
+    if (value < 1 || value > 60) {
+      // handleReminderSave(taskIndex, value);
+      timeInput.value = reminderTime;
+    }
+  });
+
+  saveBtnElement.addEventListener("click", () => {
+    overlay.style.display = "none";
+    const value = timeInput.value;
+    handleReminderSave(taskIndex, value);
+  });
+}
+
+function handleReminderSave(taskIndex, value) {
+  // Update the reminderTime in the array
+  console.log("tasksArray[taskIndex].reminderTime", taskIndex);
+  tasksArray[taskIndex].reminderTime = parseInt(value);
+  console.log("tasksArray after updating reminderTime", tasksArray);
+  // You may want to save the tasksArray to storage here if needed
+  saveTasks();
 }
 
 function handleDelete(id, taskContainer) {
@@ -90,8 +130,17 @@ function renderTask(taskId) {
     "Reminder",
     "reminder-btn",
     "fa-solid fa-bell",
-    () => handleReminder(taskId, taskInput, taskContent)
+    () => {
+      handleReminder(taskId, taskInput, taskContent);
+      // handleVisibility(true);
+      // saveTasks();
+    }
   );
+
+  // reminderBtn.addEventListener("click", () => {
+  //   handleReminder(taskId, taskInput, taskContent);
+  // });
+
   const deleteBtn = createButton("Delete", "delete-btn", "fas fa-trash", () => {
     handleDelete(taskId, taskContainer);
   });

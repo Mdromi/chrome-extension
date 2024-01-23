@@ -1,0 +1,67 @@
+.overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
+  z-index: 2; /* Higher z-index to overlay other elements */
+}
+
+#taskContent {
+  font-weight: bold;
+}
+
+.reminder-popup {
+  font-family: "Arial", sans-serif;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.reminder-popup .container {
+  max-width: 400px;
+}
+
+.reminder-popup .options-box {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.reminder-popup h1 {
+  color: #d53937;
+}
+
+.reminder-popup .input-section {
+  margin-bottom: 20px;
+}
+
+.reminder-popup label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.reminder-popup input {
+  padding: 10px;
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+}
+
+.reminder-popup button {
+  padding: 10px;
+  background-color: #d53937;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.reminder-popup button:hover {
+  background-color: #b3272f;
+}
