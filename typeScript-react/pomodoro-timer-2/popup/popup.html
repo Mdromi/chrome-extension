@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="./popup.css" />
     <link rel="stylesheet" href="./css/task.css" />
     <link rel="stylesheet" href="./css/timer.css" />
+    <link rel="stylesheet" href="./css/reminder.css" />
     <title>Pomodoro Timer</title>
   </head>
   <body>
@@ -45,6 +46,32 @@
         <div class="task-list" id="taskList"></div>
       </div>
     </div>
+    <!-- Overlay and Reminder Popup -->
+    <div class="overlay" id="overlay">
+      <div class="reminder-popup" id="reminder-popup">
+        <div class="container">
+          <div class="options-box">
+            <h1>Task Reminder On</h1>
+            <p id="taskContent"></p>
+            <div class="input-section">
+              <label for="time-input"
+                >Set Task Notification Time (1 - 60 minutes):</label
+              >
+              <input
+                id="time-input"
+                type="number"
+                placeholder="Enter notification time"
+                min="1"
+                max="60"
+                value="5"
+              />
+            </div>
+            <button id="reminder-saveBtn">Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <script src="./popup.js"></script>
     <script src="./js/handleTimer.js"></script>
     <script src="./js/handleTask.js"></script>

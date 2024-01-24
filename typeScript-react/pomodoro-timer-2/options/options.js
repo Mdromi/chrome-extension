@@ -13,12 +13,8 @@ timeInput.addEventListener("change", (event) => {
     timeInput.value = 25;
   }
 
-  saveBtn.textContent = "Save";
-  saveBtn.disabled = false;
-  saveBtn.style.cursor = "pointer";
-
   // Update button state when the time input changes
-  // updateButtonState(false);
+  updateButtonState(false);
 });
 
 saveBtn.addEventListener("click", () => {

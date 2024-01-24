@@ -1,0 +1,48 @@
+/* TIMER */
+.timer-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.time {
+  color: #333;
+  margin-bottom: 10px;
+}
+.timer-display {
+  width: 70%;
+  margin: 0 auto;
+  margin-bottom: 20px;
+  background: #fff;
+  font-family: "Roboto mono", monospace;
+  color: #d53937;
+  font-size: 25px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  border-radius: 5px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+#hours,
+#minutes,
+#seconds {
+  margin: 0 5px;
+}
+
+.timerBtn {
+  padding: 10px;
+  margin: 5px;
+  background-color: #d53937;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.timerBtn:hover {
+  background-color: #b3272f;
+}
