@@ -1,0 +1,10 @@
+{
+  "name": "Tailwind Color Plate",
+  "description": "Tailwind Color Plate extension",
+  "version": "1.0",
+  "manifest_version": 3,
+  "permissions": ["storage", "activeTab", "scripting"],
+  "action": {
+    "default_popup": "index.html"
+  }
+}
