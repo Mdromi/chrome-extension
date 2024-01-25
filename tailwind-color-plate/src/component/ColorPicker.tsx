@@ -20,10 +20,23 @@ const ColorPicker: React.FC = () => {
     setIconColor("text-black");
   };
 
+  const getRandomNumber = (max: number) => {
+    return Math.floor(Math.random() * max);
+  };
+
+  const getRandomClass = () => {
+    const rowIndex = getRandomNumber(classNames.length);
+    const row = classNames[rowIndex];
+
+    const colIndex = getRandomNumber(row.length);
+    const randomClass = row[colIndex];
+
+    return randomClass;
+  };
+
   useEffect(() => {
-    setCurrentColor("slate-500");
-    setIconColor("text-white");
-    setCurrentHeaderColor("bg-slate-600 ");
+    const randomClass = getRandomClass();
+    selectColor(randomClass);
   }, []);
 
   const selectColor = (className: string) => {
